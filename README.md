@@ -1,6 +1,6 @@
 # Deploy Wordpress with Amazon RDS
 
-This repository contains what is needed to recreate the workshop ([deploy-wordpress-with-amazon-rds](https://aws.amazon.com/tutorials/deploy-wordpress-with-amazon-rds/module-one/))
+This repository contains what is needed to deploy Wordpress in AWS.
 
 This template create:
 * The root stack (which is also a parent stack for the first level stacks). This root stack will contain all the other stacks.
