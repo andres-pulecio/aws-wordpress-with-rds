@@ -201,6 +201,7 @@ If you don't have S3 bucket, please go back to [S3simple.yaml](../../S3/S3simple
 
 *The following diagram represents high level overview of the infrastructure:*
 
-![diagram](https://github.com/andres-pulecio/aws-cloudformation-templates/assets/53886913/41a15396-263b-4f6f-91f3-153d04740b09)
+![diagram](https://github.com/andres-pulecio/deploy-wordpress-with-amazon-rds/assets/53886913/72a6558b-6db6-42d2-a90b-0e35da19615d)
+
 
 
