@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: AWS CloudFormation - Nested stacks - RDS MYSQL template.
+Parameters:
+  SubnetId1:
+    Type: AWS::EC2::Subnet::Id
+    Description: 'The Subnet ID'
+  SubnetId2:
+    Type: AWS::EC2::Subnet::Id
+    Description: 'The Subnet ID'
+  RDSMasterUsername:
+    Type: String
+    Description: 'RDS Database Master User name'
+  RDSMasterUserPassword:
+    Type: String
+    Description: 'RDS Database Master User Password'
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: 'The VPC ID'
+Resources:
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP and HTTPS access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp  
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp  
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+      VpcId: !Ref VpcId
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupName: my-db-subnet-group
+      DBSubnetGroupDescription: my-db-subnet-group
+      SubnetIds: 
+        - !Ref SubnetId1
+        - !Ref SubnetId2
+  DBSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroup
+    Properties:
+      GroupDescription: Acceso a la base de datos desde la VPC
+      DBSecurityGroupIngress:
+        - EC2SecurityGroupId: !Ref RDSSecurityGroup
+        # - EC2SecurityGroupId: sg-0c05933f3eec392f4
+          # EC2SecurityGroupName: simplewebsecuritygroup
+          # CIDRIP: 0.0.0.0/0
+          # EC2SecurityGroupOwnerId: !Ref AWS::AccountId
+          # DBSecurityGroupName: default
+      EC2VpcId: !Ref VpcId
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    DependsOn:
+      - DBSubnetGroup
+      - DBSecurityGroup
+    Properties:
+      AllocatedStorage: 10
+      DBInstanceClass: db.t2.micro
+      # Engine: mysql
+      Engine: mariadb
+      # EngineVersion: "5.7"
+      EngineVersion: "10.5.21"
+      DBInstanceIdentifier: my-db-instance
+      DBName: mydatabase
+      MasterUsername: !Ref RDSMasterUsername
+      MasterUserPassword: !Ref RDSMasterUserPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      PubliclyAccessible: true
+      VPCSecurityGroups:
+        - !Ref RDSSecurityGroup
+        # - !Ref DBSecurityGroup
+        # - Fn::GetAtt: [ DBSecurityGroup, groupId ]
+
+Outputs:
+  RDSEndpointAddress:
+    Description: 'RDS Database Endpoint Address'
+    Value: {"Fn::GetAtt": ["DBInstance","Endpoint.Address"]}
