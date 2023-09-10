@@ -37,7 +37,7 @@ permissions:
   contents: read
 
 jobs:
-  preview:
+  PRD:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -56,14 +56,7 @@ jobs:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: '.'
-          destination_dir: ''
-
-      # - name: Update deployment status (success)
-      #   if: success()
-      #   uses: chrnorm/deployment-status@releases/v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     target_url: https://aws-bucket.s3.ap-northeast-2.amazonaws.com/${{steps.S3.outputs.object_key}}/index.html
-      #     state: 'success'
-      #     deployment_id: ${{ steps.test.outputs.deployment_id }}
+          source_dir: '../'
+  # DEPLOY:
+  #   runs-on: ubuntu-latest
+  #   environment: PRD
