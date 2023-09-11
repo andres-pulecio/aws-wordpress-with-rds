@@ -85,3 +85,13 @@ jobs:
             S3BucketName=s3-with-cloudformation
             VPCCidr=10.0.0.0/16
             VPCName=cfn-workshop-vpc
+              capabilities: CAPABILITY_IAM
+          no-execute-changeset: 0
+          no-delete-failed-changeset: 0
+          disable-rollback: 0
+          termination-protection: 0
+        env:
+          AWS_REGION: us-east-1a
+          AWS_DEFAULT_REGION: us-east-1a
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
