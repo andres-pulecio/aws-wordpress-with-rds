@@ -14,7 +14,7 @@ Parameters:
     Type: List<AWS::EC2::AvailabilityZone::Name>
     Description: The list of Availability Zones to use for the subnets in the VPC. Select 1 AZs.
     Default: ap-southeast-2a,ap-southeast-2b 
-    # Only work in this zones the reason it's the port
+    # Only work in this zones the reason it's the port.
 
   VPCName:
     Type: String
