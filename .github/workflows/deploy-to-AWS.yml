@@ -37,7 +37,7 @@ permissions:
   contents: read
 
 jobs:
-  PRD:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -56,11 +56,21 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.AWS_BUCKET }}
           source_dir: '../'
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: Test
+    needs: Build
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: Wordpress-RDS
           template: main.yaml
           parameter-overrides: "AvailabilityZones=us-east-1a,us-east-1b,EnvironmentType=Test,PublicSubnet1Cidr=10.0.0.0/24,PublicSubnet2Cidr=10.0.1.0/24,RDSMasterUserPassword=mypassword,RDSMasterUsername=myusername,S3BucketName=s3-with-cloudformation,VPCCidr=10.0.0.0/16,VPCName=cfn-workshop-vpc"
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          no-fail-on-empty-changeset: "1"
