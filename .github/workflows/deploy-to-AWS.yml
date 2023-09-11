@@ -72,6 +72,6 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: Wordpress-RDS
-          template: artifact/main.yaml
+          template: https://s3-with-cloudformation.s3.amazonaws.com/main.yaml
           parameter-overrides: "AvailabilityZones=us-east-1a,us-east-1b,EnvironmentType=Test,PublicSubnet1Cidr=10.0.0.0/24,PublicSubnet2Cidr=10.0.1.0/24,RDSMasterUserPassword=mypassword,RDSMasterUsername=myusername,S3BucketName=s3-with-cloudformation,VPCCidr=10.0.0.0/16,VPCName=cfn-workshop-vpc"
           no-fail-on-empty-changeset: "1"
