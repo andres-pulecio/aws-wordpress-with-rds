@@ -13,7 +13,7 @@ Parameters:
   AvailabilityZones:
     Type: List<AWS::EC2::AvailabilityZone::Name>
     Description: The list of Availability Zones to use for the subnets in the VPC. Select 1 AZs.
-    # Default: us-east-1a,us-east-1b
+    Default: us-east-1a,us-east-1b
   VPCName:
     Type: String
     Description: The name of the VPC.
