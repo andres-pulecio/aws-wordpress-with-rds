@@ -75,6 +75,8 @@ jobs:
           template: https://s3-with-cloudformation.s3.amazonaws.com/main.yaml
           no-fail-on-empty-changeset: "1"
           parameter-overrides: |
+            AvailabilityZones=us-east-1a
+            AvailabilityZones=us-east-1b          
             EnvironmentType=Test
             PublicSubnet1Cidr=10.0.0.0/24
             PublicSubnet2Cidr=10.0.1.0/24
@@ -83,4 +85,3 @@ jobs:
             S3BucketName=s3-with-cloudformation
             VPCCidr=10.0.0.0/16
             VPCName=cfn-workshop-vpc
-            AvailabilityZones=us-east-1a,us-east-1b          
