@@ -74,5 +74,5 @@ jobs:
           name: Wordpress-RDS
           template: https://s3-with-cloudformation.s3.amazonaws.com/main.yaml
           no-fail-on-empty-changeset: "1"
-          parameter-overrides: AvailabilityZones=us-east-1a,EnvironmentType=Test,PublicSubnet1Cidr=10.0.0.0/24,PublicSubnet2Cidr=10.0.1.0/24,RDSMasterUserPassword=mypassword,RDSMasterUsername=myusername,S3BucketName=s3-with-cloudformation,VPCCidr=10.0.0.0/16,VPCName=cfn-workshop-vpc
+          parameter-overrides: EnvironmentType=Test,PublicSubnet1Cidr=10.0.0.0/24,PublicSubnet2Cidr=10.0.1.0/24,RDSMasterUserPassword=mypassword,RDSMasterUsername=myusername,S3BucketName=s3-with-cloudformation,VPCCidr=10.0.0.0/16,VPCName=cfn-workshop-vpc
             
